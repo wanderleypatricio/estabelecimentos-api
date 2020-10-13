@@ -37,10 +37,15 @@ class EstabelecimentoController extends Controller
     {
         //pega os dados da requisição
         $dados = $request->all();
+        $imagem = $request->file('imagem');
+        //$imagem = $request->file('imagem');
         //faz a criação de um novo registro 
         $estabelecimento = Estabelecimento::create($dados);
         //verifica se os dados foram cadastrados com sucesso
         if($estabelecimento){
+            if($imagem){
+                $imagem->store('img/estabelecimentos', 'public');
+            }
             return response()->json(['data'=>$estabelecimento, 'status'=>true]);
         } else{
             return response()->json(['data'=>'Erro ao tentar cadastrar novo estabelecimento', 'status'=>false]);
@@ -59,7 +64,7 @@ class EstabelecimentoController extends Controller
         $estabelecimento = Estabelecimento::find($id);
         //se o estabelecimento for encontrado retorn os dados do estabelecimento caso não seja retorn mensagem de erro
         if($estabelecimento){
-            return response()->json($estabelecimento);
+            return response()->json(['data'=>$estabelecimento, 'status'=>true]);
         } else{
             return response()->json(['data'=>'Esse estabelecimento não foi encontrado', 'status'=>false]);
         }
@@ -75,9 +80,13 @@ class EstabelecimentoController extends Controller
     public function update(Request $request, $id)
     {
         $dados = $request->all();
+        $imagem = $request->file('imagem');
         $estabelecimento = Estabelecimento::find($id);
         if($estabelecimento){
             $estabelecimento->update($dados);
+            if($imagem){
+                $imagem->store('img/estabelecimentos', 'public');
+            }
             return response()->json(['data'=>$estabelecimento, 'status'=>true]);
         } else{
             return response()->json(['data'=>'Erro ao tentar alterar registro', 'status'=>false]);
@@ -94,6 +103,7 @@ class EstabelecimentoController extends Controller
     {
         $estabelecimento = Estabelecimento::find($id);
         if($estabelecimento){
+            
             $estabelecimento->delete();
             return response()->json(['data'=>'Estabelecimento excluído com sucesso','status'=>true]);
         }else{

@@ -34,8 +34,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     
     
-    Route::post('/estabelecimento', ['as' => 'cadastrar.estabelecimentos', 'uses'=>'EstabelecimentoController@store']);
-    Route::post('/estabelecimento/{id}/alterar', ['as' => 'alterar.estabelecimentos', 'uses'=>'EstabelecimentoController@update']);
+    Route::post('/cadastrar-estabelecimento', ['as' => 'cadastrar.estabelecimentos', 'uses'=>'EstabelecimentoController@store']);
+    Route::post('/alterar-estabelecimento', ['as' => 'alterar.estabelecimentos', 'uses'=>'EstabelecimentoController@update']);
     Route::delete('/estabelecimento/{id}', ['as' => 'excluir.estabelecimentos', 'uses'=>'EstabelecimentoController@destroy']);
 
 
